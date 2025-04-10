@@ -8,26 +8,25 @@ const SERIAL_BAUD_RATE = 9600;
 const SERVIDOR_PORTA = 3300;
 
 // habilita ou desabilita a inserção de dados no banco de dados
-const HABILITAR_OPERACAO_INSERIR = false;
+const HABILITAR_OPERACAO_INSERIR = true;
 
 // função para comunicação serial
 const serial = async (
     valoresSensorAnalogico
-    // valoresSensorDigital,
 ) => {
 
     // conexão com o banco de dados MySQL
     let poolBancoDados = mysql.createPool(
         {
             host: 'localhost',
-            user: 'root',
-            password: 'sptech',
+            user: 'aluno',
+            password: 'Sptech#2024',
             database: 'projetoPI',
-            port: 3306
+            port: 3307
         }
     ).promise();
 
-    // lista as portas seriais disponíveis e procura pelo Arduino
+
     const portas = await serialport.SerialPort.list();
     const portaArduino = portas.find((porta) => porta.vendorId == 2341 && porta.productId == 43);
     if (!portaArduino) {
@@ -63,17 +62,18 @@ const serial = async (
 
         // armazena os valores dos sensores nos arrays correspondentes
         valoresSensorAnalogico.push(sensorAnalogico);
-      
 
         if (HABILITAR_OPERACAO_INSERIR) {
             await poolBancoDados.execute(
-                'INSERT INTO dadosSensor (dado, statusSensor, fkSensor, fkUsuario) VALUES (?, ?, ?, ?)',
-                [sensorAnalogico, status, 1, 1]
+                'INSERT INTO dadosSensor (dado) VALUES (?)',
+                 [sensorAnalogico]
+
+                // [sensorAnalogico, status, 1, 1]
             );
-            await poolBancoDados.execute(
-                'INSERT INTO dadosSensor (dado, statusSensor, fkSensor, fkUsuario) VALUES (?, ?, ?, ?)',
-                [soma, status, 3, 3]
-            );
+            // await poolBancoDados.execute(
+            //     'INSERT INTO dadosSensor (dado, statusSensor, fkSensor, fkUsuario) VALUES (?, ?, ?, ?)',
+            //     [soma, status, 3, 3]
+            // );
             
             console.log("valores inseridos no banco: ", sensorAnalogico);
         }
