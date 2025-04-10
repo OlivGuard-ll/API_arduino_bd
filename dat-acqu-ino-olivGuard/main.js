@@ -55,6 +55,7 @@ const serial = async (
         const valores = data.split(';');
         const sensorAnalogico = parseFloat(valores[0]).toFixed(2);
         const status = 'ativo';
+        const defaulte = 'default';
         
         var sensorAnalogico1 = parseFloat(valores[0]).toFixed(2);
         var soma = (Number(sensorAnalogico1)+2)
@@ -64,15 +65,17 @@ const serial = async (
         valoresSensorAnalogico.push(sensorAnalogico);
 
         if (HABILITAR_OPERACAO_INSERIR) {
+          
             await poolBancoDados.execute(
-                'INSERT INTO dadosSensor (dado) VALUES (?)',
-                 [sensorAnalogico]
-
-                // [sensorAnalogico, status, 1, 1]
+                'INSERT INTO dadosSensor (dado,statusSensor,dtDado,fkSensor) VALUES (?, ?, ?, ?)',
+                [sensorAnalogico, status, defaulte, 1]
             );
-            // await poolBancoDados.execute(
-            //     'INSERT INTO dadosSensor (dado, statusSensor, fkSensor, fkUsuario) VALUES (?, ?, ?, ?)',
-            //     [soma, status, 3, 3]
+
+              // await poolBancoDados.execute(
+            //     'INSERT INTO dadosSensor (dado) VALUES (?)',
+            //      [sensorAnalogico]
+
+            //     [sensorAnalogico, status, 1, 1]
             // );
             
             console.log("valores inseridos no banco: ", sensorAnalogico);
