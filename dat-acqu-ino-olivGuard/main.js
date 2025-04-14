@@ -19,8 +19,8 @@ const serial = async (
     let poolBancoDados = mysql.createPool(
         {
             host: 'localhost',
-            user: 'aluno',
-            password: 'Sptech#2024',
+            user: 'insertAPI',
+            password: 'Urubu100@',
             database: 'projetoPI',
             port: 3307
         }
@@ -55,8 +55,8 @@ const serial = async (
         const valores = data.split(';');
         const sensorAnalogico = parseFloat(valores[0]).toFixed(2);
         const status = 'ativo';
-        const defaulte = 'default'
        
+
         var sensorAnalogico1 = parseFloat(valores[0]).toFixed(2);
         var soma = (Number(sensorAnalogico1)+2)
         
@@ -71,12 +71,10 @@ const serial = async (
                 [sensorAnalogico, status ,1]
             );
 
-              // await poolBancoDados.execute(
-            //     'INSERT INTO dadosSensor (dado) VALUES (?)',
-            //      [sensorAnalogico]
-
-            //     [sensorAnalogico, status, 1, 1]
-            // );
+            await poolBancoDados.execute(
+                'INSERT INTO dadosSensor (dado,statusSensor,dtDado,fkSensor) VALUES (?, ?, default, ?)',
+                [soma, status ,2]
+            );
             
             console.log("valores inseridos no banco: ", sensorAnalogico);
         }
