@@ -90,7 +90,7 @@ const serial = async (
 // função para criar e configurar o servidor web
 const servidor = (
     valoresSensorAnalogico
-    // valoresSensorDigital
+
 ) => {
     const app = express();
 
@@ -110,26 +110,21 @@ const servidor = (
     app.get('/sensores/analogico', (_, response) => {
         return response.json(valoresSensorAnalogico);
     });
-    // app.get('/sensores/digital', (_, response) => {
-    // return response.json(valoresSensorDigital);
-    // });
+ 
 }
 
 // função principal assíncrona para iniciar a comunicação serial e o servidor web
 (async () => {
     // arrays para armazenar os valores dos sensores
     const valoresSensorAnalogico = [];
-    // const valoresSensorDigital = [];
 
     // inicia a comunicação serial
     await serial(
         valoresSensorAnalogico,
-        // valoresSensorDigital
     );
 
     // inicia o servidor web
     servidor(
         valoresSensorAnalogico,
-        // valoresSensorDigital
     );
 })();
