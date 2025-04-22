@@ -1,0 +1,11 @@
+.containerGráfico{
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+}
+.grafico{
+    width: 80%;
+    background-color: #faf4ed;
+    border-radius: 10px;
+    box-shadow: 2px 2px;
+}
