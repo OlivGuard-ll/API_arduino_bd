@@ -18,11 +18,11 @@ const serial = async (
     // conexão com o banco de dados MySQL
     let poolBancoDados = mysql.createPool(
         {
-            host: 'localhost',
-            user: 'root',
-            password: 'sptech',
+            host: '10.18.32.201',
+            user: 'aluno',
+            password: 'Sptech#2024',
             database: 'projetoPI',
-            port: 3306  
+            port: 3306
         }
     ).promise();
 
@@ -67,7 +67,7 @@ const serial = async (
         if (HABILITAR_OPERACAO_INSERIR) {
           
             await poolBancoDados.execute(
-                'INSERT INTO Leitura (leitura,statusSensor,dtLeitura,fkSensor) VALUES (?, ?, default, ?)',
+                'INSERT INTO leitura (leitura,statusSensor,dtLeitura,fkSensor) VALUES (?, ?, default, ?)',
                 [sensorAnalogico, status ,1]
             );
 
